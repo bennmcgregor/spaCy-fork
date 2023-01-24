@@ -139,6 +139,7 @@ def make_update(
     predictions, backprop = model.begin_update(docs)
     loss, gradients = objective_func(model.ops, docs, predictions)
     backprop(gradients)
+    optimizer.step_schedules()
     model.finish_update(optimizer)
     # Don't want to return a cupy object here
     # The gradients are modified in-place by the BERT MLM,
